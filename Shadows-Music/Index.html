@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shadowNrust</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="music-app">
+    <h1>Shadow'N'Rust</h1>
+
+    <!-- Cover Image -->
+    <div class="cover-container">
+      <img id="cover" src="Covers/IMG_0285.HEIC" alt="Album Cover">
+    </div>
+
+    <!-- Song Info -->
+    <div class="song-info">
+      <h2 id="song-title">Song Title</h2>
+      <p id="song-artist">Artist Name</p>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="audio" src="Music/DownShoulder.mp3"></audio>
+
+    <!-- Audio Controls -->
+    <div class="controls">
+      <button id="prev">⏮️</button>
+      <button id="play">▶️</button>
+      <button id="next">⏭️</button>
+    </div>
+
+    <!-- Progress and Volume -->
+    <div class="sliders">
+      <input type="range" id="progress" min="0" max="100" value="0">
+      <div class="volume-container">
+        <button id="mute">🔊</button>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+      </div>
+    </div>
+
+    <!-- Repeat & Shuffle -->
+    <div class="extra-controls">
+      <button id="repeat">🔁</button>
+      <button id="shuffle">🔀</button>
+    </div>
+
+    <!-- Search & Playlist -->
+    <input type="text" id="search" placeholder="Search songs...">
+    <ul id="playlist"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #89CFF0, #1E3C72);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #fff;
+  overflow: hidden;
+}
+
+.music-app {
+  background: rgba(10, 30, 60, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  width: 350px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(30,144,255,0.5);
+  animation: pulse 3s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 20px rgba(30,144,255,0.3), 0 0 40px rgba(0,191,255,0.2); }
+  50% { box-shadow: 0 0 40px rgba(30,144,255,0.6), 0 0 80px rgba(0,191,255,0.4); }
+  100% { box-shadow: 0 0 20px rgba(30,144,255,0.3), 0 0 40px rgba(0,191,255,0.2); }
+}
+
+.cover-container img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.5s;
+  box-shadow: 0 0 20px rgba(0,191,255,0.5);
+}
+.cover-container img.playing {
+  animation: glow 2s infinite alternate;
+}
+@keyframes glow {
+  0% { box-shadow: 0 0 20px rgba(0,191,255,0.5), 0 0 40px rgba(30,144,255,0.4); }
+  50% { box-shadow: 0 0 40px rgba(0,191,255,0.8), 0 0 80px rgba(30,144,255,0.6); }
+  100% { box-shadow: 0 0 20px rgba(0,191,255,0.5), 0 0 40px rgba(30,144,255,0.4); }
+}
+
+.song-info h2, .song-info p {
+  margin: 5px 0;
+  color: #E0F7FF;
+}
+
+.controls button,
+.extra-controls button,
+.volume-container button {
+  background: #1E90FF;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s, box-shadow 0.3s;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0,191,255,0.6);
+}
+.controls button:hover,
+.extra-controls button:hover,
+.volume-container button:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(0,191,255,1), 0 0 40px rgba(30,144,255,0.8);
+}
+
+.sliders {
+  margin-top: 10px;
+}
+
+#progress, #volume {
+  width: 100%;
+  margin: 5px 0;
+  accent-color: #1E90FF;
+  outline: none;
+}
+
+#playlist li:hover {
+  background: #4682B4;
+}
+
+#playlist {
+  list-style: none;
+  padding: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border-top: 1px solid #00BFFF;
+}
+
+#playlist li {
+  padding: 5px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #00BFFF;
+  transition: background 0.2s;
+  color: #E0F7FF;
+}
+
+#search {
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #1E90FF;
+  background: #4682B4;
+  color: #fff;
+}
+#search::placeholder {
+  color: #B0E0E6;
+}
