@@ -1,8 +1,8 @@
 // List of songs
 const songs = [
-  { title: "Down on my Shoulder", artist: "Shadow", file: "Music/DownShoulder.mp3", cover: "Covers/IMG_0285.HEIC" },
-  { title: "Halloween with you", artist: "Shadow", file: "Music/Halloween.mp3", cover: "Covers/IMG_0849.HEIC" },
-  { title: "Under these Lights", artist: "Shadow", file: "Music/UnderLights.mp3", cover: "Covers/IMG_3358.HEIC" },
+  { title: "Down on my Shoulder", artist: "Shadow", file: "Music/DownShoulder.mp3", cover: "Covers/IMG_0285.jpg" },
+  { title: "Halloween with you", artist: "Shadow", file: "Music/Halloween.mp3", cover: "Covers/IMG_0849.jpg" },
+  { title: "Under these Lights", artist: "Shadow", file: "Music/UnderLights.mp3", cover: "Covers/IMG_3358.jpg" },
 ];
 
 let currentSong = 0;
