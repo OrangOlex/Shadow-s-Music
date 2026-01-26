@@ -1,79 +1,255 @@
-/* Mobile-friendly layout and scrolling improvements */
+/* Responsive player + playlist stylesheet
+   Add to your main stylesheet or include in a <style> block.
+   Adjust the --controls-height values if your header/controls are taller.
+*/
 
+:root{
+  --bg: #0f1724;
+  --panel: #0b1624;
+  --accent: #1E90FF;
+  --accent-strong: #00BFFF;
+  --text: #eef6ff;
+  --muted: #9fb4cc;
+
+  /* Estimated height of top controls + title area in px.
+     Adjust if your controls take more/less space on mobile */
+  --controls-height-desktop: 220px;
+  --controls-height-tablet: 180px;
+  --controls-height-mobile: 160px;
+
+  --max-cover-desktop: 220px;
+  --max-cover-tablet: 160px;
+  --max-cover-mobile: 120px;
+}
+
+/* Page basics for touch/scroll behavior */
 html, body {
   height: 100%;
+  min-height: 100%;
   margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
-  -webkit-overflow-scrolling: touch; /* smoother iOS scrolling */
-  background: #0b0f17;
-  color: #fff;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* allow scrolling and enable momentum on iOS */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
-.music-app {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 16px;
+/* Player container - adapt to your HTML structure (e.g. #player) */
+#player {
   box-sizing: border-box;
-
-  /* Make the app fill the viewport on mobile, allowing vertical page scroll */
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
-/* Make the cover responsive */
-.cover-container img {
+/* COVER IMAGE */
+#cover {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 8px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  user-select: none;
+
+  /* ensure it doesn't overflow parent column on small screens */
+  max-width: var(--max-cover-desktop);
+  /* optional drop shadow */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+  transition: transform .18s ease, box-shadow .18s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /* allow taps but not block vertical pan */
 }
 
-/* Controls layout */
+/* small animation when playing (optional) */
+#cover.playing {
+  transform: scale(1.02);
+}
+
+/* Right-side content (titles, controls, playlist) */
+.player-main {
+  flex: 1 1 auto;
+  min-width: 0; /* allow text to truncate in flex children */
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* song title & artist */
+#song-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#song-artist {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Controls row */
 .controls {
   display: flex;
-  gap: 8px;
-  justify-content: center;
+  gap: 0.45rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-/* Make the playlist scrollable on small screens */
-#playlist {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  width: 100%;
-  /* Give a reasonable height so it can scroll on mobile */
-  max-height: 28vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+/* Buttons styling — tune sizes for mobile */
+.controls button {
+  background: var(--panel);
+  color: var(--text);
+  border: none;
+  padding: 0.45rem 0.6rem;
   border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .12s ease, transform .08s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.controls button:active { transform: translateY(1px); }
+.controls button[aria-pressed="true"], .controls button.active {
+  background: var(--accent-strong);
+}
+
+/* Sliders and inputs */
+#progress, #volume, input[type="range"] {
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  outline: none;
+  width: 100%;
+}
+#progress::-webkit-slider-thumb, #volume::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(30,144,255,0.12);
+  cursor: pointer;
+}
+
+/* Playlist area — scrollable and compact */
+#playlist {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* iOS momentum */
+  touch-action: pan-y;
+  border-radius: 6px;
+  background: transparent;
+  box-sizing: border-box;
+  /* default desktop: allow tall list, but constrain by viewport minus controls */
+  max-height: calc(100vh - var(--controls-height-desktop));
+}
+
+/* Individual list items */
+#playlist li {
+  padding: 0.6rem 0.8rem;
+  margin: 0;
+  color: var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.98rem;
+}
+#playlist li:hover {
   background: rgba(255,255,255,0.02);
 }
-
-/* Ensure sliders are usable on touch devices */
-.sliders input[type="range"] {
-  touch-action: none; /* the range needs pointer control on many browsers */
+#playlist li.current {
+  background: rgba(70,130,180,0.22);
+  color: #fff;
 }
 
-/* Buttons and touch targets */
-button {
-  padding: 10px;
-  border: none;
-  background: #1E90FF;
-  color: white;
+/* Keep playlist scrollbar subtle */
+#playlist::-webkit-scrollbar {
+  width: 8px;
+}
+#playlist::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.06);
   border-radius: 6px;
-  font-size: 16px;
 }
 
-/* Slight visual separation for mobile */
-@media (max-width: 480px) {
-  .music-app {
-    padding: 12px;
-  }
-  button {
-    padding: 12px;
-    font-size: 18px;
-  }
+/* Layout changes for narrower screens */
+@media (max-width: 980px) {
+  #player { padding: 0.8rem; gap: 0.75rem; }
+  :root { --controls-height-desktop: 200px; }
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+  /* stack cover + content vertically for narrow widths */
+  #player {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #cover {
+    margin: 0 auto;
+    max-width: var(--max-cover-tablet);
+  }
+  #playlist {
+    max-height: calc(100vh - var(--controls-height-tablet));
+  }
+  :root {
+    --controls-height-desktop: var(--controls-height-tablet);
+  }
+
+  /* slightly smaller text and tighter spacing */
+  #playlist li { padding: 0.5rem 0.6rem; font-size: 0.96rem; }
+  .controls button { padding: 0.38rem 0.5rem; font-size: 0.95rem; }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  #cover { max-width: var(--max-cover-mobile); }
+  /* make UI compact */
+  .player-main { gap: 0.45rem; }
+  #song-title { font-size: 1rem; }
+  #song-artist { font-size: 0.86rem; }
+  #playlist li { padding: 0.42rem 0.5rem; font-size: 0.92rem; }
+  .controls { gap: 0.35rem; }
+  .controls button { padding: 0.32rem 0.44rem; font-size: 0.92rem; }
+
+  /* shrink playlist height to leave room for mobile chrome and controls */
+  #playlist {
+    max-height: calc(100vh - var(--controls-height-mobile));
+  }
+  :root { --controls-height-desktop: var(--controls-height-mobile); }
+}
+
+/* Accessibility: focus states */
+.controls button:focus, #playlist li:focus {
+  outline: 2px solid rgba(30,144,255,0.28);
+  outline-offset: 2px;
+}
+
+/* If your cover/overlay or another element sits above the page and blocks touches,
+   the following rule can be applied to make it non-blocking when not interactive:
+   .overlay.inactive { pointer-events: none; }
+   Use JS to toggle this class if necessary. */
