@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>shadowNrust</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow'N'Rust</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="music-app">
-    <h1>Shadow'N'Rust</h1>
 
-    <!-- Cover Image (raw GitHub URL) -->
-    <div class="cover-container">
-      <img id="cover" src="https://raw.githubusercontent.com/OrangOlex/Shadow-s-Music/c01a54525543214430e76244c7255b42c0d4fb3d/Covers/IMG_0285.jpg" alt="Album Cover">
-    </div>
+<div class="music-app">
 
-    <!-- Song Info -->
-    <div class="song-info">
-      <h2 id="song-title">Song Title</h2>
-      <p id="song-artist">Artist Name</p>
-    </div>
+<h1>Shadow'N'Rust</h1>
 
-    <!-- Audio Element (raw GitHub URL) -->
-    <audio id="audio" src="https://raw.githubusercontent.com/OrangOlex/Shadow-s-Music/c01a54525543214430e76244c7255b42c0d4fb3d/Music/DownShoulder.mp3"></audio>
+<img id="cover">
 
-    <!-- Audio Controls -->
-    <div class="controls">
-      <button id="prev">⏮️</button>
-      <button id="play">▶️</button>
-      <button id="next">⏭️</button>
-    </div>
+<h2 id="song-title"></h2>
+<p id="song-artist"></p>
 
-    <!-- Progress and Volume -->
-    <div class="sliders">
-      <input type="range" id="progress" min="0" max="100" value="0">
-      <div class="volume-container">
-        <button id="mute">🔊</button>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
-      </div>
-    </div>
+<audio id="audio"></audio>
 
-    <!-- Repeat & Shuffle -->
-    <div class="extra-controls">
-      <button id="repeat">🔁</button>
-      <button id="shuffle">🔀</button>
-    </div>
+<div class="controls">
+  <button id="prev">⏮</button>
+  <button id="play">▶</button>
+  <button id="next">⏭</button>
+</div>
 
-    <!-- Search & Playlist -->
-    <input type="text" id="search" placeholder="Search songs...">
-    <ul id="playlist"></ul>
-  </div>
+<input type="range" id="progress" min="0" max="100" value="0">
 
-  <script src="script.js"></script>
+<div class="controls">
+  <button id="mute">🔊</button>
+  <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+</div>
+
+<div class="controls">
+  <button id="repeat">🔁</button>
+  <button id="shuffle">🔀</button>
+  <button id="queue">📥 One-Time Playlist</button>
+</div>
+
+<input type="text" id="search" placeholder="Search songs...">
+<ul id="playlist"></ul>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
