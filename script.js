@@ -1,8 +1,18 @@
 // List of songs
 const songs = [
-  { title: "Down on my Shoulder", artist: "Shadow", file: "Music/DownShoulder.mp3", cover: "Covers/IMG_0285.jpg" },
-  { title: "Halloween with you", artist: "Shadow", file: "Music/Halloween.mp3", cover: "Covers/IMG_0849.jpg" },
-  { title: "Under these Lights", artist: "Shadow", file: "Music/UnderLights.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Down on my Shoulder", artist: "ShadowNRust", file: "Music/DownShoulder.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Halloween with you", artist: "ShadowNRust", file: "Music/Halloween.mp3", cover: "Covers/IMG_0285.jpg" },
+  { title: "Under these Lights", artist: "ShadowNRust", file: "Music/UnderLights.mp3", cover: "Covers/IMG_0849.jpg" },
+  { title: "Hollow Tree Heart", artist: "ShadowNRust", file: "Music/Hollow Tree Heart.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Dream in Pastel", artist: "ShadowNRust", file: "Music/Dream in Pastel_1.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Little Lights", artist: "ShadowNRust", file: "Music/Little Lights.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Moon Milk", artist: "ShadowNRust", file: "Music/Moon Milk.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Mossy Thoughts", artist: "ShadowNRust", file: "Music/Mossy Thoughts_1.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Pebbles in My Pocket", artist: "ShadowNRust", file: "Music/Pebbles in My Pocket.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Quiet Like the Rain", artist: "ShadowNRust", file: "Music/Quiet Like the Rain.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Snail Trails", artist: "ShadowNRust", file: "Music/Snail Trails.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Stars in the Sink", artist: "ShadowNRust", file: "Music/Stars in the Sink.mp3", cover: "Covers/IMG_3358.jpg" },
+  { title: "Velvet Mornings", artist: "ShadowNRust", file: "Music/Velvet Mornings.mp3", cover: "Covers/IMG_3358.jpg" },
 ];
 
 let currentSong = 0;
