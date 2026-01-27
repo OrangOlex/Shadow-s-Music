@@ -1,29 +1,31 @@
-// List of songs
 const songs = [
-  { title: "Down on my Shoulder", artist: "ShadowNRust", file: "Music/DownShoulder.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Halloween with you", artist: "ShadowNRust", file: "Music/Halloween.mp3", cover: "Covers/IMG_0285.jpg" },
-  { title: "Under these Lights", artist: "ShadowNRust", file: "Music/UnderLights.mp3", cover: "Covers/IMG_0849.jpg" },
-  { title: "Hollow Tree Heart", artist: "ShadowNRust", file: "Music/Hollow Tree Heart.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Dream in Pastel", artist: "ShadowNRust", file: "Music/Dream in Pastel_1.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Little Lights", artist: "ShadowNRust", file: "Music/Little Lights.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Moon Milk", artist: "ShadowNRust", file: "Music/Moon Milk.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Mossy Thoughts", artist: "ShadowNRust", file: "Music/Mossy Thoughts_1.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Pebbles in My Pocket", artist: "ShadowNRust", file: "Music/Pebbles in My Pocket.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Quiet Like the Rain", artist: "ShadowNRust", file: "Music/Quiet Like the Rain.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Snail Trails", artist: "ShadowNRust", file: "Music/Snail Trails.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Stars in the Sink", artist: "ShadowNRust", file: "Music/Stars in the Sink.mp3", cover: "Covers/IMG_3358.jpg" },
-  { title: "Velvet Mornings", artist: "ShadowNRust", file: "Music/Velvet Mornings.mp3", cover: "Covers/IMG_3358.jpg" },
+ { title:"Down on my Shoulder",artist:"ShadowNRust",file:"Music/DownShoulder.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Halloween with you",artist:"ShadowNRust",file:"Music/Halloween.mp3",cover:"Covers/IMG_0285.jpg"},
+ { title:"Under these Lights",artist:"ShadowNRust",file:"Music/UnderLights.mp3",cover:"Covers/IMG_0849.jpg"},
+ { title:"Hollow Tree Heart",artist:"ShadowNRust",file:"Music/Hollow Tree Heart.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Dream in Pastel",artist:"ShadowNRust",file:"Music/Dream in Pastel_1.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Little Lights",artist:"ShadowNRust",file:"Music/Little Lights.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Moon Milk",artist:"ShadowNRust",file:"Music/Moon Milk.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Mossy Thoughts",artist:"ShadowNRust",file:"Music/Mossy Thoughts_1.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Pebbles in My Pocket",artist:"ShadowNRust",file:"Music/Pebbles in My Pocket.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Quiet Like the Rain",artist:"ShadowNRust",file:"Music/Quiet Like the Rain.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Snail Trails",artist:"ShadowNRust",file:"Music/Snail Trails.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Stars in the Sink",artist:"ShadowNRust",file:"Music/Stars in the Sink.mp3",cover:"Covers/IMG_3358.jpg"},
+ { title:"Velvet Mornings",artist:"ShadowNRust",file:"Music/Velvet Mornings.mp3",cover:"Covers/IMG_3358.jpg"}
 ];
 
 let currentSong = 0;
 let isPlaying = false;
 let repeat = false;
 let shuffle = false;
+let oneTime = false;
+let queue = [];
 
 const audio = document.getElementById("audio");
 const cover = document.getElementById("cover");
 const songTitle = document.getElementById("song-title");
 const songArtist = document.getElementById("song-artist");
+const playlistEl = document.getElementById("playlist");
 
 const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
@@ -33,130 +35,130 @@ const volume = document.getElementById("volume");
 const muteBtn = document.getElementById("mute");
 const repeatBtn = document.getElementById("repeat");
 const shuffleBtn = document.getElementById("shuffle");
-
-const playlistEl = document.getElementById("playlist");
+const queueBtn = document.getElementById("queue");
 const search = document.getElementById("search");
 
-// Load song
-function loadSong(index){
-  const song = songs[index];
-  audio.src = song.file;
-  cover.src = song.cover;
-  songTitle.textContent = song.title;
-  songArtist.textContent = song.artist;
-  highlightPlaylist();
+function loadSong(i){
+ const s = songs[i];
+ audio.src = s.file;
+ cover.src = s.cover;
+ songTitle.textContent = s.title;
+ songArtist.textContent = s.artist;
+ highlightPlaylist();
 }
 
-// Play / Pause
 function playSong(){
-  audio.play();
-  playBtn.textContent = "⏸️";
-  isPlaying = true;
-  cover.classList.add("playing");
+ audio.play();
+ isPlaying = true;
+ playBtn.textContent = "⏸";
+ cover.classList.add("playing");
 }
+
 function pauseSong(){
-  audio.pause();
-  playBtn.textContent = "▶️";
-  isPlaying = false;
-  cover.classList.remove("playing");
+ audio.pause();
+ isPlaying = false;
+ playBtn.textContent = "▶";
+ cover.classList.remove("playing");
 }
 
-// Next / Previous
 function nextSong(){
-  if(shuffle){
-    currentSong = Math.floor(Math.random() * songs.length);
-  } else {
-    currentSong = (currentSong + 1) % songs.length;
-  }
-  loadSong(currentSong);
-  playSong();
+
+ if(oneTime){
+   queue.shift();
+   if(queue.length === 0){
+     pauseSong();
+     return;
+   }
+   currentSong = queue[0];
+ }
+
+ else if(shuffle){
+   let next;
+   do{
+     next = Math.floor(Math.random()*songs.length);
+   } while(next === currentSong);
+   currentSong = next;
+ }
+
+ else{
+   currentSong = (currentSong + 1) % songs.length;
+ }
+
+ loadSong(currentSong);
+ playSong();
 }
+
 function prevSong(){
-  currentSong = (currentSong - 1 + songs.length) % songs.length;
-  loadSong(currentSong);
-  playSong();
+ currentSong = (currentSong - 1 + songs.length) % songs.length;
+ loadSong(currentSong);
+ playSong();
 }
 
-// Update Progress
-audio.addEventListener("timeupdate", () => {
-  progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+audio.addEventListener("ended",()=>{
+ if(repeat) playSong();
+ else nextSong();
 });
 
-// Seek
-progress.addEventListener("input", () => {
-  audio.currentTime = (progress.value / 100) * audio.duration;
+audio.addEventListener("timeupdate",()=>{
+ progress.value = (audio.currentTime/audio.duration)*100 || 0;
 });
 
-// Volume
-volume.addEventListener("input", () => {
-  audio.volume = volume.value;
-});
+progress.oninput = ()=> audio.currentTime = (progress.value/100)*audio.duration;
+volume.oninput = ()=> audio.volume = volume.value;
 
-// Mute
-muteBtn.addEventListener("click", () => {
-  audio.muted = !audio.muted;
-  muteBtn.textContent = audio.muted ? "🔇" : "🔊";
-});
+muteBtn.onclick = ()=>{
+ audio.muted = !audio.muted;
+ muteBtn.textContent = audio.muted ? "🔇" : "🔊";
+};
 
-// Repeat / Shuffle
-repeatBtn.addEventListener("click", () => {
-  repeat = !repeat;
-  repeatBtn.style.background = repeat ? "#00BFFF" : "#1E90FF";
-});
-shuffleBtn.addEventListener("click", () => {
-  shuffle = !shuffle;
-  shuffleBtn.style.background = shuffle ? "#00BFFF" : "#1E90FF";
-});
+repeatBtn.onclick = ()=>{
+ repeat = !repeat;
+ repeatBtn.classList.toggle("active", repeat);
+};
 
-// Song Ended
-audio.addEventListener("ended", () => {
-  if(repeat) playSong();
-  else nextSong();
-});
+shuffleBtn.onclick = ()=>{
+ shuffle = !shuffle;
+ shuffleBtn.classList.toggle("active", shuffle);
+};
 
-// Play/Pause button
-playBtn.addEventListener("click", () => {
-  isPlaying ? pauseSong() : playSong();
-});
+queueBtn.onclick = ()=>{
+ oneTime = !oneTime;
+ queueBtn.classList.toggle("active", oneTime);
 
-// Prev/Next buttons
-prevBtn.addEventListener("click", prevSong);
-nextBtn.addEventListener("click", nextSong);
+ if(oneTime){
+   queue = [...Array(songs.length).keys()];
+   if(shuffle) queue.sort(()=>Math.random()-0.5);
+ }
+};
 
-// Cover tap to play/pause
-cover.addEventListener("click", () => {
-  isPlaying ? pauseSong() : playSong();
-});
+playBtn.onclick = ()=> isPlaying ? pauseSong() : playSong();
+prevBtn.onclick = prevSong;
+nextBtn.onclick = nextSong;
+cover.onclick = ()=> isPlaying ? pauseSong() : playSong();
 
-// Build Playlist
 function buildPlaylist(filter=""){
-  playlistEl.innerHTML = "";
-  songs.forEach((song, index) => {
-    if(song.title.toLowerCase().includes(filter) || song.artist.toLowerCase().includes(filter)){
-      const li = document.createElement("li");
-      li.textContent = `${song.title} - ${song.artist}`;
-      li.addEventListener("click", () => {
-        currentSong = index;
-        loadSong(currentSong);
-        playSong();
-      });
-      playlistEl.appendChild(li);
-    }
-  });
+ playlistEl.innerHTML="";
+ songs.forEach((s,i)=>{
+   if(s.title.toLowerCase().includes(filter)){
+     const li=document.createElement("li");
+     li.textContent=`${s.title} - ${s.artist}`;
+     li.onclick=()=>{
+       currentSong=i;
+       loadSong(i);
+       playSong();
+     }
+     playlistEl.appendChild(li);
+   }
+ });
 }
 
-// Highlight current song
 function highlightPlaylist(){
-  Array.from(playlistEl.children).forEach((li, idx) => {
-    li.style.background = idx === currentSong ? "#4682B4" : "transparent";
-  });
+ [...playlistEl.children].forEach((li,i)=>{
+   li.classList.toggle("current", i===currentSong);
+ });
 }
 
-// Search filter
-search.addEventListener("input", () => {
-  buildPlaylist(search.value.toLowerCase());
-});
+search.oninput = ()=> buildPlaylist(search.value.toLowerCase());
 
-// Initial setup
-loadSong(currentSong);
+loadSong(0);
 buildPlaylist();
