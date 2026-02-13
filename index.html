@@ -2,45 +2,65 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ Proper mobile sizing / no cutoff -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
 <title>Shadow'N'Rust</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="music-app">
+<div class="app-wrap">
 
-<h1>Shadow'N'Rust</h1>
+  <div class="music-app" id="player">
 
-<img id="cover">
+    <h1 class="title">Shadow'N'Rust</h1>
 
-<h2 id="song-title"></h2>
-<p id="song-artist"></p>
+    <div class="cover-wrap">
+      <img id="cover" alt="Album Cover">
+    </div>
 
-<audio id="audio"></audio>
+    <div class="song-meta">
+      <h2 id="song-title"></h2>
+      <p id="song-artist"></p>
+    </div>
 
-<div class="controls">
-  <button id="prev">⏮</button>
-  <button id="play">▶</button>
-  <button id="next">⏭</button>
-</div>
+    <audio id="audio"></audio>
 
-<input type="range" id="progress" min="0" max="100" value="0">
+    <!-- Main Controls -->
+    <div class="controls main-controls">
+      <button id="prev">⏮</button>
+      <button id="play">▶</button>
+      <button id="next">⏭</button>
+    </div>
 
-<div class="controls">
-  <button id="mute">🔊</button>
-  <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
-</div>
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <input type="range" id="progress" min="0" max="100" value="0">
+    </div>
 
-<div class="controls">
-  <button id="repeat">🔁</button>
-  <button id="shuffle">🔀</button>
-  <button id="queue">📥 One-Time Playlist</button>
-</div>
+    <!-- Volume -->
+    <div class="controls volume-controls">
+      <button id="mute">🔊</button>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    </div>
 
-<input type="text" id="search" placeholder="Search songs...">
-<ul id="playlist"></ul>
+    <!-- Extra Controls -->
+    <div class="controls extra-controls">
+      <button id="repeat">🔁</button>
+      <button id="shuffle">🔀</button>
+      <button id="queue">📥 One-Time Playlist</button>
+    </div>
+
+    <!-- Search -->
+    <input type="text" id="search" placeholder="Search songs...">
+
+    <!-- Playlist -->
+    <ul id="playlist"></ul>
+
+  </div>
 
 </div>
 
